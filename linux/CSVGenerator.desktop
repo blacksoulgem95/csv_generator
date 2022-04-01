@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=CSV Generator
+Comment=QA Tool to generate test CSVs
+Exec=~/.local/bin/csv_generator
+Icon=csvgenerator
+Terminal=false
