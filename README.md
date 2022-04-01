@@ -1,6 +1,8 @@
-# csv_generator
+# CSV Generator
 
 CSV Generator for QA
+
+[![Flutter CI](https://github.com/blacksoulgem95/csv_generator/actions/workflows/main.yml/badge.svg)](https://github.com/blacksoulgem95/csv_generator/actions/workflows/main.yml)
 
 ## Getting Started
 
