@@ -60,11 +60,11 @@ jobs:
         run: flutter config --enable-windows-desktop
       - name: Build artifacts
         run: |
-        flutter build windows --release
-        cp windows/installer.nsi build/windows/runner/Release/install.nsi
-        wget -O nsis.exe https://prdownloads.sourceforge.net/nsis/nsis-3.08-setup.exe?download
-        nsis.exe /S
-        cd build/windows/runner/Release
+          flutter build windows --release
+          cp windows/installer.nsi build/windows/runner/Release/install.nsi
+          wget -O nsis.exe https://prdownloads.sourceforge.net/nsis/nsis-3.08-setup.exe?download
+          nsis.exe /S
+          cd build/windows/runner/Release
 
       - name: Create installer
         uses: joncloud/makensis-action@v3.6
