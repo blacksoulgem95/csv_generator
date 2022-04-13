@@ -2,12 +2,12 @@
 
 TAG=$(curl -sL https://api.github.com/repos/blacksoulgem95/csv_generator/releases/latest |  jq -r ".tag_name")
 
-curl "https://github.com/blacksoulgem95/csv_generator/releases/download/$TAG/CSVGenerator-$TAG-linux.zip" --output "csvgen.zip"
+wget "https://github.com/blacksoulgem95/csv_generator/releases/download/$TAG/CSVGenerator-$TAG-linux.zip" -O "csvgen.zip"
 
 rm -rf /opt/csvgenerator || true
 mkdir /opt/csvgenerator
 
-tar -xf csvgen.zip -C /opt/csvgenerator
+unzip csvgen.zip -d /opt/csvgenerator
 
 cat <<EOT >> /opt/csvgenerator/icon.desktop
 [Desktop Entry]
