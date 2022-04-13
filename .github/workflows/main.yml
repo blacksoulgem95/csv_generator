@@ -60,10 +60,10 @@ jobs:
         run: flutter config --enable-windows-desktop
       - name: Build artifacts
         run: |
-          cp windows/installer.nsi build/windows/runner/Release/install.nsi
           Invoke-WebRequest -Uri https://prdownloads.sourceforge.net/nsis/nsis-3.08-setup.exe?download -OutFile nsis.exe
           nsis.exe /S
           flutter build windows --release
+          cp windows/installer.nsi build/windows/runner/Release/install.nsi
           cd build/windows/runner/Release
 
       - name: Create installer
