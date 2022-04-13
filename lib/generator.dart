@@ -8,17 +8,18 @@ class Generator {
   var rng = Random();
   int? rowCount;
   String? file;
+  String? mobileColName;
 
   int maxBatch = 10000; // 10k
   var buffer = <String>[];
 
-  static generate(int rowCount, String filePath) async {
+  static generate(int rowCount, String mobileColName, String filePath) async {
     dev.log("Generating $rowCount rows into file $filePath");
-    var gen = Generator(rowCount, filePath);
+    var gen = Generator(rowCount, mobileColName, filePath);
     return gen.saveFile();
   }
 
-  Generator(this.rowCount, this.file);
+  Generator(this.rowCount, this.mobileColName, this.file);
 
   saveFile() async {
     var file = File(this.file!);
@@ -26,7 +27,7 @@ class Generator {
       await file.delete();
     }
     await file.create();
-    await file.writeAsString("mobile\n", mode: FileMode.append);
+    await file.writeAsString("$mobileColName\n", mode: FileMode.append);
 
     int lastPerc = 0;
 

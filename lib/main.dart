@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
       ),
       home:
-      const LoaderOverlay(child: MyHomePage(title: 'CSV Generator for QA')),
+          const LoaderOverlay(child: MyHomePage(title: 'CSV Generator for QA')),
     );
   }
 }
@@ -56,6 +56,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int rows = 0;
+  String mobileCol = "mobile";
+  final TextEditingController _controller = TextEditingController();
 
   void _updateRowCount(value) {
     setState(() {
@@ -69,14 +71,46 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _updateMobileCol(value) {
+    setState(() {
+      if (value.length == 0) {
+        showDialog(
+            context: context,
+            builder: (context) => const AlertDialog(
+                  content: Text("The mobile column cannot be empty"),
+                ));
+
+        mobileCol = "mobile";
+        _controller.value = _controller.value.copyWith(
+          text: mobileCol,
+          selection: TextSelection.collapsed(offset: mobileCol.length),
+        );
+
+        return;
+      } else {
+        log("saving value " + value);
+        mobileCol = value;
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller.value = _controller.value.copyWith(
+      text: mobileCol,
+      selection: TextSelection.collapsed(offset: mobileCol.length),
+    );
+  }
+
   void _saveFile() async {
     if (rows < 1) {
       showDialog(
           context: context,
-          builder: (context) =>
-          const AlertDialog(
-            content: Text("You need at least 1 contact"),
-          ));
+          builder: (context) => const AlertDialog(
+                content: Text("You need at least 1 contact"),
+              ));
       return;
     }
 
@@ -88,35 +122,30 @@ class _MyHomePageState extends State<MyHomePage> {
     if (outputFile == null) {
       showDialog(
           context: context,
-          builder: (context) =>
-          const AlertDialog(
-            content: Text("Action cancelled"),
-          ));
+          builder: (context) => const AlertDialog(
+                content: Text("Action cancelled"),
+              ));
       return;
     }
     context.loaderOverlay.show();
 
     try {
-      await Generator.generate(rows, outputFile);
+      await Generator.generate(rows, mobileCol, outputFile);
 
       showDialog(
           context: context,
-          builder: (context) =>
-          const AlertDialog(
-            content: Text("File saved"),
-          ));
+          builder: (context) => const AlertDialog(
+                content: Text("File saved"),
+              ));
     } on Exception catch (error) {
-
       log('error on saving file: $error');
 
       showDialog(
           context: context,
-          builder: (context) =>
-          const AlertDialog(
-            content: Text("An error occurred"),
-          ));
-    }
-    finally {
+          builder: (context) => const AlertDialog(
+                content: Text("An error occurred"),
+              ));
+    } finally {
       context.loaderOverlay.hide();
     }
   }
@@ -159,18 +188,28 @@ class _MyHomePageState extends State<MyHomePage> {
               'How many rows you need?',
             ),
             Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10.0,
-              ),
-              child: TextField(
-                decoration: const InputDecoration(labelText: "Row count"),
-                keyboardType: TextInputType.number,
-                onChanged: _updateRowCount,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly
-                ], // Only numbers can be entered
-              ),
-            )
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10.0,
+                ),
+                child: Column(children: [
+                  TextField(
+                    decoration: const InputDecoration(labelText: "Row count"),
+                    keyboardType: TextInputType.number,
+                    onChanged: _updateRowCount,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.digitsOnly
+                    ], // Only numbers can be entered
+                  ),
+                  TextField(
+                    controller: _controller,
+                    decoration: const InputDecoration(labelText: "Mobile Column Name"),
+                    keyboardType: TextInputType.name,
+                    onChanged: _updateMobileCol,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.singleLineFormatter
+                    ], // Single line text
+                  ),
+                ]))
           ],
         ),
       ),
