@@ -52,25 +52,24 @@ jobs:
         with:
           channel: 'stable'
           flutter-version: '2.10.0'
+
       - name: Install project dependencies
         run: flutter pub get
+
       - name: Generate intermediates
         run: flutter pub run build_runner build --delete-conflicting-outputs
+
       - name: Enable windows build
         run: flutter config --enable-windows-desktop
+
       - name: Build artifacts
         run: |
-#          Invoke-WebRequest -Uri https://prdownloads.sourceforge.net/nsis/nsis-3.08-setup.exe?download -OutFile nsis.exe
-#          nsis.exe /S
           flutter build windows --release
           cp windows/installer.nsi build/windows/runner/Release/install.nsi
 
       - name: Create installer
         working-directory: build/windows/runner/Release
         run: C:\Program Files (x86)\NSIS\makensis.exe /V3 install.nsi
-
-      - name: Reset workdir
-        run: cd ../../../..
 
       - name: Archive Release
         uses: thedoctor0/zip-release@master
