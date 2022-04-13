@@ -7,7 +7,7 @@ curl "https://github.com/blacksoulgem95/csv_generator/releases/download/$TAG/CSV
 rm -rf /opt/csvgenerator || true
 mkdir /opt/csvgenerator
 
-tar -xfv csvgen.zip -C /opt/csvgenerator
+tar -xf csvgen.zip -C /opt/csvgenerator
 
 cat <<EOT >> /opt/csvgenerator/icon.desktop
 [Desktop Entry]

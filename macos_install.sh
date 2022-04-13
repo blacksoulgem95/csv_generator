@@ -4,7 +4,7 @@ TAG=$(curl -sL https://api.github.com/repos/blacksoulgem95/csv_generator/release
 
 curl "https://github.com/blacksoulgem95/csv_generator/releases/download/$TAG/CSVGenerator-$TAG-macos.zip" --output "csvgen.zip"
 
-tar -xfv csvgen.zip -C ./csvgen
+tar -xf csvgen.zip -C ./csvgen
 mv "./csvgen/CSV Generator.app" "/Applications/CSV Generator.app"
 
 rm -rf ./csvgen || true
