@@ -65,13 +65,6 @@ jobs:
       - name: Build artifacts
         run: |
           flutter build windows --release
-          cp windows/installer.nsi build/windows/runner/Release/install.nsi
-
-      - name: Create installer
-        working-directory: build/windows/runner/Release
-        run: |
-          set PATH=%PATH%;"C:\Program Files (x86)\NSIS"
-          makensis.exe /V3 install.nsi
 
       - name: Archive Release
         uses: thedoctor0/zip-release@master
@@ -79,6 +72,7 @@ jobs:
           type: 'zip'
           filename: CSVGenerator-${{github.ref_name}}-windows.zip
           directory: build/windows/runner/Release
+
       - name: Windows Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
@@ -86,6 +80,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: build/windows/runner/Release/CSVGenerator-${{github.ref_name}}-windows.zip
+
+      - name: Create installer
+        run: |
+          cp windows/installer.nsi build/windows/runner/Release/install.nsi
+          cd build/windows/runner/Release
+          set PATH=%PATH%;"C:\Program Files (x86)\NSIS"
+          makensis.exe /V3 install.nsi
+
       - name: Windows Installer Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')

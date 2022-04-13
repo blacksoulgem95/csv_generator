@@ -42,6 +42,7 @@ Section "CSV Generator (required)"
   ; Wildcards are allowed:
   File *.dll
   ; To add a folder named MYFOLDER and all files in it recursively, use this EXACT syntax:
+  SetOutPath "$INSTDIR\data\"
   File /r data\*.*
   ; See: https://nsis.sourceforge.io/Reference/File
   ; MAKE SURE YOU PUT ALL THE FILES HERE IN THE UNINSTALLER TOO
