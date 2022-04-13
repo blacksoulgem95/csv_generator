@@ -70,7 +70,7 @@ jobs:
       - name: Create installer
         working-directory: build/windows/runner/Release
         run: |
-        PATH=$PATH;"C:\Program Files (x86)\NSIS"
+        set PATH=%PATH%;"C:\Program Files (x86)\NSIS"
         makensis.exe /V3 install.nsi
 
       - name: Archive Release
