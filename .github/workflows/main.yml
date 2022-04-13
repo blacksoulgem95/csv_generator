@@ -59,7 +59,19 @@ jobs:
       - name: Enable windows build
         run: flutter config --enable-windows-desktop
       - name: Build artifacts
-        run: flutter build windows --release
+        run: |
+        flutter build windows --release
+        cp windows/installer.nsi build/windows/runner/Release/install.nsi
+        wget -O nsis.exe https://prdownloads.sourceforge.net/nsis/nsis-3.08-setup.exe?download
+        nsis.exe /S
+        cd build/windows/runner/Release
+
+      - name: Create installer
+        uses: joncloud/makensis-action@v3.6
+
+      - name: Reset workdir
+        run: cd ../../../..
+
       - name: Archive Release
         uses: thedoctor0/zip-release@master
         with:
@@ -73,6 +85,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: build/windows/runner/Release/CSVGenerator-${{github.ref_name}}-windows.zip
+      - name: Windows Installer Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          files: build/windows/runner/Release/CSVGenerator_Setup.exe
 
   build-and-release-macos:
     runs-on: macos-latest
