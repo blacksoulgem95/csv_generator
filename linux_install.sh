@@ -28,8 +28,8 @@ Icon=/opt/csvgenerator/csv_generator.png
 Terminal=false
 EOT
 
-su -c "find /opt/csvgenerator -type d -exec chmod 755 {} \;"
-su -c "find /opt/csvgenerator -type f -exec chmod 644 {} \;"
+find /opt/csvgenerator -type d -exec sudo chmod 755 {} \;
+find /opt/csvgenerator -type f -exec sudo chmod 644 {} \;
 sudo chmod a+x /opt/csvgenerator/lib/csv_generator
 
 ln -s /opt/csvgenerator/icon.desktop "./CSV Generator.desktop"

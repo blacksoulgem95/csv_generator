@@ -16,7 +16,7 @@ Go to the [release](https://github.com/blacksoulgem95/csv_generator/releases) pa
 #### Installation
 
 ```bash
-su -c "curl https://raw.githubusercontent.com/blacksoulgem95/csv_generator/main/linux_install.sh -o csvgeninstall.sh && chmod +x csvgeninstall.sh && ./csvgeninstall.sh"
+curl https://raw.githubusercontent.com/blacksoulgem95/csv_generator/main/linux_install.sh -o csvgeninstall.sh && chmod +x csvgeninstall.sh && sudo ./csvgeninstall.sh
 ```
 
 ### MacOS
@@ -26,7 +26,7 @@ su -c "curl https://raw.githubusercontent.com/blacksoulgem95/csv_generator/main/
 #### Installation
 
 ```bash
-su -c "curl https://raw.githubusercontent.com/blacksoulgem95/csv_generator/main/macos_install.sh -o csvgeninstall.sh && chmod +x csvgeninstall.sh && ./csvgeninstall.sh"
+curl https://raw.githubusercontent.com/blacksoulgem95/csv_generator/main/macos_install.sh -o csvgeninstall.sh && chmod +x csvgeninstall.sh && sudo ./csvgeninstall.sh
 ```
 
 ## Getting Started
