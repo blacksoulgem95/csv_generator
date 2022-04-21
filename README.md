@@ -10,9 +10,13 @@ CSV Generator for QA
 Go to the [release](https://github.com/blacksoulgem95/csv_generator/releases) page and download the installer for the required version, run the installer and you're ready to go.
 
 ### Linux
+#### Prerequisites
+- `apt install jq`
+
+#### Installation
 
 ```bash
-sudo curl -sL https://raw.githubusercontent.com/blacksoulgem95/csv_generator/main/linux_install.sh | bash 
+su -c "curl https://raw.githubusercontent.com/blacksoulgem95/csv_generator/main/linux_install.sh -o csvgeninstall.sh && chmod +x csvgeninstall.sh && ./csvgeninstall.sh"
 ```
 
 ### MacOS
@@ -22,7 +26,7 @@ sudo curl -sL https://raw.githubusercontent.com/blacksoulgem95/csv_generator/mai
 #### Installation
 
 ```bash
-sudo curl -sL https://raw.githubusercontent.com/blacksoulgem95/csv_generator/main/macos_install.sh | bash
+su -c "curl https://raw.githubusercontent.com/blacksoulgem95/csv_generator/main/macos_install.sh -o csvgeninstall.sh && chmod +x csvgeninstall.sh && ./csvgeninstall.sh"
 ```
 
 ## Getting Started
