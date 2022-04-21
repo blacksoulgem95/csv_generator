@@ -32,6 +32,12 @@ find /opt/csvgenerator -type d -exec sudo chmod 755 {} \;
 find /opt/csvgenerator -type f -exec sudo chmod 644 {} \;
 sudo chmod a+x /opt/csvgenerator/lib/csv_generator
 
+rm ./csvgen.zip
+
 ln -s /opt/csvgenerator/icon.desktop "./CSV Generator.desktop"
+ln -s /opt/csvgenerator/icon.desktop "/usr/share/applications/CSV Generator.desktop"
+
+chmod a+rwx "./CSV Generator.desktop"
+chmod a+rwx "/usr/share/applications/CSV Generator.desktop"
 
 echo "CSV Generator installed under /opt/csvgenerator - and in this directory has been created a .desktop file to link the application"
