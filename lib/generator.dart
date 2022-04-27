@@ -1,28 +1,30 @@
 import 'dart:developer' as dev;
-import 'dart:ffi';
 import 'dart:io';
-import 'dart:math';
+
+import 'package:csv_generator/countryNumbers.dart';
 
 class Generator {
-
-  var rng = Random();
-  int? rowCount;
-  String? file;
-  String? mobileColName;
+  int rowCount;
+  String file;
+  String mobileColName;
+  CountryNumber countryNumber;
+  bool hasPrefix;
 
   int maxBatch = 10000; // 10k
+
   var buffer = <String>[];
 
-  static generate(int rowCount, String mobileColName, String filePath) async {
+
+  static generate(int rowCount, String mobileColName, String filePath, CountryNumber countryNumber, bool hasPrefix) async {
     dev.log("Generating $rowCount rows into file $filePath");
-    var gen = Generator(rowCount, mobileColName, filePath);
+    var gen = Generator(rowCount, mobileColName, filePath, countryNumber, hasPrefix);
     return gen.saveFile();
   }
 
-  Generator(this.rowCount, this.mobileColName, this.file);
+  Generator(this.rowCount, this.mobileColName, this.file, this.countryNumber, this.hasPrefix);
 
   saveFile() async {
-    var file = File(this.file!);
+    var file = File(this.file);
     if (await file.exists()) {
       await file.delete();
     }
@@ -31,9 +33,9 @@ class Generator {
 
     int lastPerc = 0;
 
-    for (var i = 0; i < rowCount!; i++) {
+    for (var i = 0; i < rowCount; i++) {
       await addRow(file);
-      int perc = ((i / rowCount!) * 100).toInt();
+      int perc = ((i / rowCount) * 100).toInt();
       if (perc != lastPerc) {
         lastPerc = perc;
         dev.log('Processed $perc% ($i/$rowCount)');
@@ -43,7 +45,7 @@ class Generator {
   }
 
   addRow(File file) async {
-    var n = getRandomNumber();
+    var n = countryNumber.generate(hasPrefix);
     buffer.add(n);
 
     if (buffer.length > maxBatch) {
@@ -58,10 +60,4 @@ class Generator {
     buffer.clear();
   }
 
-  getRandomNumber() {
-    // 333 333 3333
-    var code = rng.nextInt(900000000) + 100000000;
-
-    return 3.toString() + code.toString();
-  }
 }

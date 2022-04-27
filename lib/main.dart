@@ -192,23 +192,34 @@ class _MyHomePageState extends State<MyHomePage> {
                   horizontal: 10.0,
                 ),
                 child: Column(children: [
-                  TextField(
-                    decoration: const InputDecoration(labelText: "Row count"),
-                    keyboardType: TextInputType.number,
-                    onChanged: _updateRowCount,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly
-                    ], // Only numbers can be entered
+                  Row(
+                    children: [
+                      TextField(
+                        decoration:
+                            const InputDecoration(labelText: "Row count"),
+                        keyboardType: TextInputType.number,
+                        onChanged: _updateRowCount,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ], // Only numbers can be entered
+                      ),
+                      TextField(
+                        controller: _controller,
+                        decoration: const InputDecoration(
+                            labelText: "Mobile Column Name"),
+                        keyboardType: TextInputType.name,
+                        onChanged: _updateMobileCol,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.singleLineFormatter
+                        ], // Single line text
+                      ),
+                    ],
                   ),
-                  TextField(
-                    controller: _controller,
-                    decoration: const InputDecoration(labelText: "Mobile Column Name"),
-                    keyboardType: TextInputType.name,
-                    onChanged: _updateMobileCol,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.singleLineFormatter
-                    ], // Single line text
-                  ),
+                  Row(
+                    children: [
+
+                    ],
+                  )
                 ]))
           ],
         ),
